@@ -21,7 +21,7 @@ export function SidebarMenu() {
     { name: "Дашборд", path: "/dashboard", icon: LayoutDashboard },
     { name: "Клієнти", path: "/clients", icon: Users },
     { name: "Справи", path: "/cases", icon: Briefcase },
-    { name: "Документи", path: "/documents", icon: FileText },
+    { name: "Документи", path: "/dashboard/documents", icon: FileText },
     { name: "Календар", path: "/calendar", icon: CalendarDays },
   ];
 
