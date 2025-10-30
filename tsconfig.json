@@ -1,0 +1,56 @@
+{
+  "compilerOptions": {
+    /* === Типізація та шляхи === */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "*"
+      ]
+    },
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
+    ],
+    /* === Ціль та бібліотеки === */
+    "target": "es2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    /* === Модулі === */
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    /* === Допуски і перевірки === */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "noEmit": true,
+    /* === Інше === */
+    "incremental": true,
+    "allowJs": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "lib/**/*.ts",
+    "scripts/**/*.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next"
+  ]
+}

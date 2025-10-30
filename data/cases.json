@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "title": "Спір про невиконання договору поставки",
+    "clientId": 1,
+    "lawyer": "Петренко І.",
+    "category": "Господарське право",
+    "status": "У суді",
+    "courtDate": "2025-11-05T10:00:00",
+    "aiAnalysis": {
+      "successProbability": 0.78,
+      "riskLevel": "Середній",
+      "comment": "Сильна доказова база, ризик лише у строках."
+    },
+    "relatedDocuments": [1]
+  }
+]

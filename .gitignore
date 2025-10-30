@@ -1,0 +1,17 @@
+# Build artifacts
+.next
+out
+dist
+
+# Node
+node_modules
+npm-debug.log*
+yarn-error.log*
+
+# Env
+.env
+.env.local
+.env.production
+
+# MacOS
+.DS_Store

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "d6f1e6a8-7a5c-4e2f-9c1a-6b5e9b2b1f21",
+    "title": "Договір підряду між ТОВ «Альфа» та ФОП «Бета»",
+    "type": "contract",
+    "clientId": 1,
+    "caseId": 1,
+    "status": "signed",
+    "language": "uk",
+    "tags": ["господарське", "підряд"],
+    "lawCitations": [
+      { "jurisdiction": "UA", "law": "ЦК України", "article": "ст. 837" }
+    ],
+    "effectiveDate": "2025-10-01",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-09-29T12:03:00Z",
+        "author": "petrenko@firm.ua",
+        "source": "generated",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb924",
+        "file": {
+          "docx": "/public/docs/contracts/contract_alfa_beta_v1.docx",
+          "pdfa": "/public/docs_pdfa/contract_alfa_beta_v1.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  }
+]
