@@ -1,71 +1,76 @@
 // === FILE: scripts/ocr_scan_to_json.ts ===
 import fs from "fs";
 import path from "path";
-import Tesseract from "tesseract.js";
-import { getFileHash, getDocuments, saveJSON } from "../lib/server-utils"; // ✅ исправлено
+import { getFileHash, getDocuments, saveJSON } from "../lib/server-utils";
 
 const DOCS_DIR = path.join(process.cwd(), "public/docs_pdfa");
 const OCR_DIR = path.join(process.cwd(), "public/docs_ocr");
-const MANIFEST_PATH = path.join(process.cwd(), "data/doc_manifest.json");
+const MANIFEST_PATH = path.join(process.cwd(), "public/data/doc_manifest.json");
 
-// Переконаймося, що цільова тека існує
-if (!fs.existsSync(OCR_DIR)) fs.mkdirSync(OCR_DIR, { recursive: true });
-
-async function processDocuments() {
-  const allDocs = getDocuments(DOCS_DIR);
-  console.log(`🔍 Знайдено ${allDocs.length} документів для OCR.`);
-
-  const manifest: any[] = [];
-
-  for (const docPath of allDocs) {
-    const fileName = path.basename(docPath);
-    const ocrPath = path.join(OCR_DIR, `${fileName}.ocr.json`);
-
-    console.log(`🧠 Обробка ${fileName}...`);
-    const hash = getFileHash(docPath);
-
-    try {
-      if (fileName.endsWith(".pdf")) {
-        const { data } = await Tesseract.recognize(docPath, "ukr+eng");
-        const result = {
-          file: fileName,
-          text: data.text.slice(0, 5000),
-          lang: (data as any).language || "ukr",
-          confidence: data.confidence,
-          hash,
-          createdAt: new Date().toISOString(),
-        };
-        saveJSON(ocrPath, result);
-      } else {
-        const result = {
-          file: fileName,
-          text: "Тестовий документ DOCX. OCR не потрібен.",
-          hash,
-          createdAt: new Date().toISOString(),
-        };
-        saveJSON(ocrPath, result);
-      }
-
-      manifest.push({
-        file: fileName,
-        ocrFile: `/public/docs_ocr/${fileName}.ocr.json`,
-        sha256: hash,
-        status: "processed",
-        summary: "OCR виконано, текст збережено.",
-        date: new Date().toISOString(),
-      });
-    } catch (err: any) {
-      console.error(`❌ Помилка OCR для ${fileName}:`, err.message);
-      manifest.push({
-        file: fileName,
-        status: "error",
-        error: err.message,
-      });
-    }
-  }
-
-  saveJSON(MANIFEST_PATH, manifest);
-  console.log("✅ OCR завершено. Маніфест створено:", MANIFEST_PATH);
+// === Функція-заглушка OCR ===
+// (на наступних етапах сюди можна буде інтегрувати реальний Tesseract або OpenAI Vision)
+function fakeOCRText(file: string): string {
+  const base = file.toLowerCase();
+  if (base.includes("contract"))
+    return `Це договір між сторонами щодо виконання робіт. Містить умови оплати, відповідальність та строки.`;
+  if (base.includes("claim"))
+    return `Це позовна заява до суду щодо стягнення заборгованості або порушення умов договору.`;
+  if (base.includes("power"))
+    return `Це довіреність на представництво інтересів клієнта у суді або державних органах.`;
+  return `Тестовий OCR-текст для документа ${file}.`;
 }
 
-processDocuments();
+// === Генерація OCR-текстів та оновлення маніфесту ===
+function generateOCR() {
+  if (!fs.existsSync(DOCS_DIR)) {
+    console.error(`❌ Папка не знайдена: ${DOCS_DIR}`);
+    return;
+  }
+  if (!fs.existsSync(OCR_DIR)) fs.mkdirSync(OCR_DIR, { recursive: true });
+
+  const pdfFiles = getDocuments(DOCS_DIR);
+  const manifest: any[] = [];
+
+  pdfFiles.forEach((file) => {
+    const filename = path.basename(file);
+    const hash = getFileHash(file);
+    const text = fakeOCRText(filename);
+
+    const jsonData = {
+      file: filename,
+      text,
+      sha256: hash,
+      createdAt: new Date().toISOString(),
+    };
+
+    // Зберігаємо OCR JSON
+    const ocrPath = path.join(OCR_DIR, filename.replace(".pdf", ".json"));
+    saveJSON(ocrPath, jsonData);
+
+    // Додаємо у маніфест
+    manifest.push({
+      id: hash.slice(0, 8),
+      title: `Документ ${filename}`,
+      type: filename.includes("contract")
+        ? "Договір"
+        : filename.includes("claim")
+        ? "Позовна заява"
+        : filename.includes("power")
+        ? "Довіреність"
+        : "Документ",
+      status: "Підписано",
+      file: {
+        original: `/docs/${filename.replace(".pdf", ".docx")}`,
+        pdfa: `/docs_pdfa/${filename}`,
+      },
+      versions: [{ sha256: hash, path: ocrPath }],
+    });
+  });
+
+  // Зберігаємо маніфест
+  saveJSON(MANIFEST_PATH, manifest);
+  console.log(`✅ OCR JSON створено для ${pdfFiles.length} файлів`);
+  console.log(`✅ Маніфест оновлено: ${MANIFEST_PATH}`);
+}
+
+generateOCR();

@@ -27,7 +27,7 @@ export function DocumentInspector({ doc }: { doc: any }) {
     const name = doc.versions[0].file.pdfa.split("/").pop()?.replace(".pdf", ".json");
     fetch(`/docs_ocr/${name}`)
       .then((r) => r.json())
-      .then((data) => setOcr(data.text?.slice(0, 2000) || "(OCR порожній)"))
+      .then((data) => setOcr(data.text?.slice(0, 3000) || "(OCR порожній)"))
       .catch(() => setOcr("(OCR не знайдено)"));
   }, [doc]);
 

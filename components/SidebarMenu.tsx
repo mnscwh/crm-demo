@@ -19,10 +19,10 @@ export function SidebarMenu() {
   const links = [
     { name: "Головна", path: "/", icon: Home },
     { name: "Дашборд", path: "/dashboard", icon: LayoutDashboard },
-    { name: "Клієнти", path: "/dashboard/clients", icon: Users },
-    { name: "Справи", path: "/dashboard/cases", icon: Briefcase },
-    { name: "Документи", path: "/dashboard/documents", icon: FileText },
-    { name: "Календар", path: "/dashboard/calendar", icon: CalendarDays },
+    { name: "Клієнти", path: "/clients", icon: Users },
+    { name: "Справи", path: "/cases", icon: Briefcase },
+    { name: "Документи", path: "/documents", icon: FileText },
+    { name: "Календар", path: "/calendar", icon: CalendarDays },
   ];
 
   return (
