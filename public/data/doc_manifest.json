@@ -1,27 +1,809 @@
 [
   {
-    "id": "d6f1e6a8-7a5c-4e2f-9c1a-6b5e9b2b1f21",
-    "title": "Договір підряду між ТОВ «Альфа» та ФОП «Бета»",
+    "id": "e9bc145c-fed1-4599-bfcc-b2eeb82de15f",
+    "title": "Договір №1",
     "type": "contract",
+    "status": "signed",
     "clientId": 1,
     "caseId": 1,
-    "status": "signed",
     "language": "uk",
-    "tags": ["господарське", "підряд"],
-    "lawCitations": [
-      { "jurisdiction": "UA", "law": "ЦК України", "article": "ст. 837" }
+    "tags": [
+      "contract",
+      "юридичний документ"
     ],
-    "effectiveDate": "2025-10-01",
     "versions": [
       {
         "version": "1.0.0",
-        "createdAt": "2025-09-29T12:03:00Z",
-        "author": "petrenko@firm.ua",
+        "createdAt": "2025-10-30T20:13:58.425Z",
+        "author": "system@lawcrm.ai",
         "source": "generated",
-        "sha256": "e3b0c44298fc1c149afbf4c8996fb924",
+        "sha256": "117fa0379a98f1c993e5555e3005d201a6fa835baced47059750d5444180bf5c",
         "file": {
-          "docx": "/public/docs/contracts/contract_alfa_beta_v1.docx",
-          "pdfa": "/public/docs_pdfa/contract_alfa_beta_v1.pdf"
+          "docx": "/public/docs/contracts/contract_1.docx",
+          "pdfa": "/public/docs_pdfa/contract_1.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "e6311aab-12ba-45d7-8478-955792a95f21",
+    "title": "Договір №2",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 2,
+    "caseId": 2,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.427Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "57e74a77fe04cde7202f3d793dd11f647ca92dc0f7ffd850e11f959efabcf394",
+        "file": {
+          "docx": "/public/docs/contracts/contract_10.docx",
+          "pdfa": "/public/docs_pdfa/contract_10.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "f49846a2-475a-4b3a-bdda-fa73105b8471",
+    "title": "Договір №3",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 3,
+    "caseId": 3,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.427Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "49d2deab6f40e4bddde5870dc869c4d734a0f4fc2f9fe0857a02916f0a3e250b",
+        "file": {
+          "docx": "/public/docs/contracts/contract_2.docx",
+          "pdfa": "/public/docs_pdfa/contract_2.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "8fedbff0-49a6-463d-aeb6-5ad12db70f7b",
+    "title": "Договір №4",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 4,
+    "caseId": 4,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.427Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "e8d4104fcfaf43df73794ffa1a4754217f2092873781446f7accdd2dacf31802",
+        "file": {
+          "docx": "/public/docs/contracts/contract_3.docx",
+          "pdfa": "/public/docs_pdfa/contract_3.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "6f676c0e-9c7c-470a-a680-286d09fdeb98",
+    "title": "Договір №5",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 5,
+    "caseId": 5,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.427Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "b4aee3cce2195656a5edf916a7b4766f600ecbe898952673b2efc208e0869061",
+        "file": {
+          "docx": "/public/docs/contracts/contract_4.docx",
+          "pdfa": "/public/docs_pdfa/contract_4.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "15966991-823f-4ced-a9ce-a78fbe1409dd",
+    "title": "Договір №6",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 6,
+    "caseId": 6,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.429Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "feae6c313f67a1f88332f47c2fabfbf3cf37c424a087f61d5a834193c8dadb0d",
+        "file": {
+          "docx": "/public/docs/contracts/contract_5.docx",
+          "pdfa": "/public/docs_pdfa/contract_5.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "64af6dd6-382e-4dde-8e5c-a22eb346524c",
+    "title": "Договір №7",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 7,
+    "caseId": 7,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.429Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "5ce76800a846c1d8afd0b569dfa21535030c1bf38d4d1cd383d0480d7a5722df",
+        "file": {
+          "docx": "/public/docs/contracts/contract_6.docx",
+          "pdfa": "/public/docs_pdfa/contract_6.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "1fdfbb2f-12b0-415f-8491-3c89e1e32bb2",
+    "title": "Договір №8",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 8,
+    "caseId": 8,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.429Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "a344626e5e5fd8023c9f0742e3fa4f622012ba6868161bd83e8dfbdb5414c70b",
+        "file": {
+          "docx": "/public/docs/contracts/contract_7.docx",
+          "pdfa": "/public/docs_pdfa/contract_7.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "a0c0c9d0-e856-4760-bfb8-eca8efe0471f",
+    "title": "Договір №9",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 9,
+    "caseId": 9,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.430Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "9bb9eacf3254848bf80b3f520ccfc7db3f056cc3af9f34360a3782f226e1dd66",
+        "file": {
+          "docx": "/public/docs/contracts/contract_8.docx",
+          "pdfa": "/public/docs_pdfa/contract_8.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "d09dcb80-4bc4-4ada-a82d-45bffc7b6ace",
+    "title": "Договір №10",
+    "type": "contract",
+    "status": "signed",
+    "clientId": 10,
+    "caseId": 10,
+    "language": "uk",
+    "tags": [
+      "contract",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.430Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "d4aef85c04095ad2cde97cd9e36c7d1e20d368079910b21ac0134afcd5e8f102",
+        "file": {
+          "docx": "/public/docs/contracts/contract_9.docx",
+          "pdfa": "/public/docs_pdfa/contract_9.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "edd6b470-ef50-436a-9397-a6198b5a5e60",
+    "title": "Позов №1",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 1,
+    "caseId": 1,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.430Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "253fcc96a9ea97b8d0cb790b51373d4d0032a75152d0875984c522c96c6c2ecb",
+        "file": {
+          "docx": "/public/docs/claims/claim_11.docx",
+          "pdfa": "/public/docs_pdfa/claim_11.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "8f4b41f7-3213-4f5b-abb3-ced353b2ea35",
+    "title": "Позов №2",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 2,
+    "caseId": 2,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "06a69f0e5786aed635c18e4a110bc36377aa597edc2205c89fff98e04006c0aa",
+        "file": {
+          "docx": "/public/docs/claims/claim_12.docx",
+          "pdfa": "/public/docs_pdfa/claim_12.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "50c88a90-a5d3-4552-9084-ec9d79b94a33",
+    "title": "Позов №3",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 3,
+    "caseId": 3,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "96a0142f5429963235e1643b22070d49f7343d54378749057d9c02c6f35db695",
+        "file": {
+          "docx": "/public/docs/claims/claim_13.docx",
+          "pdfa": "/public/docs_pdfa/claim_13.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "c883dd01-0395-4d15-8992-805a52c67bd8",
+    "title": "Позов №4",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 4,
+    "caseId": 4,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "e16db1a5da3b12ffcc7a44f45889aeda55f265fa11e412816734e3d610e81d4b",
+        "file": {
+          "docx": "/public/docs/claims/claim_14.docx",
+          "pdfa": "/public/docs_pdfa/claim_14.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "9e3953b0-f131-413a-bdc7-14567e880371",
+    "title": "Позов №5",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 5,
+    "caseId": 5,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "55cae21745c97e1c7213794b879ce1c0d0be94c19f41c885759722cdae1c95bc",
+        "file": {
+          "docx": "/public/docs/claims/claim_15.docx",
+          "pdfa": "/public/docs_pdfa/claim_15.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "a5ee905e-d2cd-46e1-b554-9c7b5f5e1b7f",
+    "title": "Позов №6",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 6,
+    "caseId": 6,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "9303ba0bcaeb7c5c18b7dbccb7ad402470c377e9462ace7f7bcb1084830afd70",
+        "file": {
+          "docx": "/public/docs/claims/claim_16.docx",
+          "pdfa": "/public/docs_pdfa/claim_16.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "4db067b8-66d5-4482-852d-3c5b99fb40ed",
+    "title": "Позов №7",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 7,
+    "caseId": 7,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "e02fcadfceef0865216f7723018b3e8104f330a3946abc6595c400b2ba9b828a",
+        "file": {
+          "docx": "/public/docs/claims/claim_17.docx",
+          "pdfa": "/public/docs_pdfa/claim_17.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "861e3db3-897f-47c8-ab9b-2e43bb596074",
+    "title": "Позов №8",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 8,
+    "caseId": 8,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "95b93a1890d3f03703f48fab3126fee1a95a9143c1017fbd65915b75c97b7cc3",
+        "file": {
+          "docx": "/public/docs/claims/claim_18.docx",
+          "pdfa": "/public/docs_pdfa/claim_18.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "f2559023-8e6c-4ee8-a9f8-ae5273b19d36",
+    "title": "Позов №9",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 9,
+    "caseId": 9,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "cd13acc82a1248726f9cd77d304267c8ff19a97a91cebe4c41e8f1f724636116",
+        "file": {
+          "docx": "/public/docs/claims/claim_19.docx",
+          "pdfa": "/public/docs_pdfa/claim_19.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "c39f15a7-a972-43c4-9664-e6a764e5e739",
+    "title": "Позов №10",
+    "type": "claim",
+    "status": "signed",
+    "clientId": 10,
+    "caseId": 10,
+    "language": "uk",
+    "tags": [
+      "claim",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "a394496f73c854551190801c46873b6c7344eb147ef93fccf73c9607c772e2ba",
+        "file": {
+          "docx": "/public/docs/claims/claim_20.docx",
+          "pdfa": "/public/docs_pdfa/claim_20.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "cbe304e7-87d9-4b30-8f11-793d1e9fd408",
+    "title": "Довіреність №1",
+    "type": "power",
+    "status": "signed",
+    "clientId": 1,
+    "caseId": 1,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.431Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "d08bcfb8a56704743ef1420e6380cf5eab638b84dd435d761489d2fdb075ac19",
+        "file": {
+          "docx": "/public/docs/powers/power_21.docx",
+          "pdfa": "/public/docs_pdfa/power_21.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "ed2978d4-8ffa-4bb6-bb41-d4ebe7abc15a",
+    "title": "Довіреність №2",
+    "type": "power",
+    "status": "signed",
+    "clientId": 2,
+    "caseId": 2,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.432Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "5f7a08fa64f03d1999a09ac627907239363573f3b3fd11e42e9da8c56dfad699",
+        "file": {
+          "docx": "/public/docs/powers/power_22.docx",
+          "pdfa": "/public/docs_pdfa/power_22.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "5988ed66-21c6-44b2-ace8-36a93e8cb28b",
+    "title": "Довіреність №3",
+    "type": "power",
+    "status": "signed",
+    "clientId": 3,
+    "caseId": 3,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "a626be250ca478f72f0c692999fb4bd4bf59536264b835fe180169edd27250b1",
+        "file": {
+          "docx": "/public/docs/powers/power_23.docx",
+          "pdfa": "/public/docs_pdfa/power_23.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "221f6107-dfca-47e5-aedd-0d80cd17e25c",
+    "title": "Довіреність №4",
+    "type": "power",
+    "status": "signed",
+    "clientId": 4,
+    "caseId": 4,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "2b3e46c674ba4a15624a582d924aa0a2f3c5483d89dc26bbad2391f574d88f36",
+        "file": {
+          "docx": "/public/docs/powers/power_24.docx",
+          "pdfa": "/public/docs_pdfa/power_24.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "2e9ead13-d1f1-4998-b6c6-578d7756da85",
+    "title": "Довіреність №5",
+    "type": "power",
+    "status": "signed",
+    "clientId": 5,
+    "caseId": 5,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "a7c688ca30cbef17fa745cd4fb09e3e17acb404be3c80703309d89b8b6ddde3f",
+        "file": {
+          "docx": "/public/docs/powers/power_25.docx",
+          "pdfa": "/public/docs_pdfa/power_25.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "ff62266c-dc7b-4268-8aa1-2def5e095217",
+    "title": "Довіреність №6",
+    "type": "power",
+    "status": "signed",
+    "clientId": 6,
+    "caseId": 6,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "53c8c4f4b38631f90a5097cb340c9f18544ecb45969bdb1a1c41ff2ee88af7cc",
+        "file": {
+          "docx": "/public/docs/powers/power_26.docx",
+          "pdfa": "/public/docs_pdfa/power_26.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "56686137-92c7-4bac-9542-0ad8220fa794",
+    "title": "Довіреність №7",
+    "type": "power",
+    "status": "signed",
+    "clientId": 7,
+    "caseId": 7,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "34a55edce29dae3b57840bf31135b781376f9456491d16a237c5ee03cb861a19",
+        "file": {
+          "docx": "/public/docs/powers/power_27.docx",
+          "pdfa": "/public/docs_pdfa/power_27.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "f3dbf131-407a-46da-a476-4484369b2420",
+    "title": "Довіреність №8",
+    "type": "power",
+    "status": "signed",
+    "clientId": 8,
+    "caseId": 8,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "3ff1ea7fbb23f6c0dbf3e23fd34330137b9ba4fdc8085e2bb2bb2d93a4e04f8c",
+        "file": {
+          "docx": "/public/docs/powers/power_28.docx",
+          "pdfa": "/public/docs_pdfa/power_28.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "7edf414f-9997-4e41-a6fd-cc10a8e8e041",
+    "title": "Довіреність №9",
+    "type": "power",
+    "status": "signed",
+    "clientId": 9,
+    "caseId": 9,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "aa5dbf8dc0911a00b2fb14475b54cf1107f7047cd4b4c7ca9ae08ecee3081b6c",
+        "file": {
+          "docx": "/public/docs/powers/power_29.docx",
+          "pdfa": "/public/docs_pdfa/power_29.pdf"
+        }
+      }
+    ],
+    "lastVersion": "1.0.0"
+  },
+  {
+    "id": "bacef4a8-0b6e-4dc5-ae47-a282c50bf466",
+    "title": "Довіреність №10",
+    "type": "power",
+    "status": "signed",
+    "clientId": 10,
+    "caseId": 10,
+    "language": "uk",
+    "tags": [
+      "power",
+      "юридичний документ"
+    ],
+    "versions": [
+      {
+        "version": "1.0.0",
+        "createdAt": "2025-10-30T20:13:58.433Z",
+        "author": "system@lawcrm.ai",
+        "source": "generated",
+        "sha256": "12ce8258dcd6a0ec481da0ec76e96dfc4b455c96a4f4e374a72abf4d188aef34",
+        "file": {
+          "docx": "/public/docs/powers/power_30.docx",
+          "pdfa": "/public/docs_pdfa/power_30.pdf"
         }
       }
     ],
