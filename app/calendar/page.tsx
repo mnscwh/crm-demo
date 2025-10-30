@@ -56,10 +56,6 @@ export default function CalendarPage() {
           </tbody>
         </table>
       </div>
-
-      <p className="text-xs text-gray-500">
-        Ризик подій розраховано локально (евристика демо). Джерело: /lib/risk.ts
-      </p>
     </div>
   );
 }
