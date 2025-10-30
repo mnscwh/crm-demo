@@ -12,7 +12,37 @@ const SYSTEM_LEGAL_GUARDRAILS = `
 5. Мова — українська.
 `;
 
-/** 🧠 Основний аналіз документів */
+/** 🧠 1️⃣ Основний Copilot-запит для загальних питань (чат, клієнти, дедлайни) */
+export async function askLegalCopilot(question: string) {
+  const ctx = getCRMContext();
+
+  const res = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    temperature: 0.2,
+    messages: [
+      { role: "system", content: SYSTEM_LEGAL_GUARDRAILS },
+      { role: "user", content: `Контекст CRM:\n${ctx}` },
+      { role: "user", content: question },
+    ],
+  });
+
+  return res.choices[0].message?.content?.trim() || "Недостатньо даних у CRM.";
+}
+
+/** 🗂️ Формує короткий контекст CRM */
+function getCRMContext() {
+  try {
+    const clients = readJson<any[]>("data/clients.json").slice(0, 5);
+    const cases = readJson<any[]>("data/cases.json").slice(0, 5);
+    const docs = readJson<any[]>("data/documents.json").slice(0, 5);
+    const calendar = readJson<any[]>("data/calendar.json").slice(0, 5);
+    return JSON.stringify({ clients, cases, docs, calendar }, null, 2);
+  } catch {
+    return "Контекст CRM недоступний.";
+  }
+}
+
+/** 📄 2️⃣ AI-аналіз документів */
 export async function legalChatOnDocs(question: string, docsText: string) {
   const systemPrompt = `
   Ви — юридичний аналітик CRM.
