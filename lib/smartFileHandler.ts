@@ -8,19 +8,24 @@ import Tesseract from "tesseract.js";
 import yaml from "js-yaml";
 import { v4 as uuid } from "uuid";
 
-// 📁 Куди кладемо оброблені дані локально (для зберігання метаданих)
 const UPLOAD_DIR = path.join(process.cwd(), "data/docs");
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 /**
  * 🧠 Основна функція для обробки завантаженого файлу
- * Викликається у /api/upload
  */
 export async function handleUpload(file: File) {
   const arrayBuffer = await file.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
-  const name = file.name;
-  const ext = name.split(".").pop()?.toLowerCase() || "bin";
+  return await normalizeAndParse(file.name, arrayBuffer);
+}
+
+/**
+ * 🧩 normalizeAndParse — універсальна функція для парсингу будь-якого формату
+ * Використовується у /api/upload
+ */
+export async function normalizeAndParse(filename: string, data: ArrayBuffer) {
+  const buffer = Buffer.from(data);
+  const ext = filename.split(".").pop()?.toLowerCase() || "bin";
   const id = uuid();
 
   let text = "";
@@ -28,12 +33,12 @@ export async function handleUpload(file: File) {
 
   try {
     if (ext === "pdf") {
-      const data = await pdf(buffer);
-      if (data.text?.trim().length > 20) {
-        text = data.text.trim();
+      const parsed = await pdf(buffer);
+      if (parsed.text?.trim().length > 20) {
+        text = parsed.text.trim();
         type = "pdf";
       } else {
-        console.log("🧠 OCR fallback:", name);
+        console.log("🧠 OCR fallback:", filename);
         const { data: ocr } = await Tesseract.recognize(buffer, "ukr+eng");
         text = ocr.text.trim();
         type = "pdf-scan";
@@ -62,29 +67,26 @@ export async function handleUpload(file: File) {
 
     const meta = {
       id,
-      name,
+      name: filename,
       ext,
       type,
-      size: file.size,
+      size: buffer.length,
       uploaded: new Date().toISOString(),
       text,
     };
 
-    // локальне кешування
     fs.writeFileSync(path.join(UPLOAD_DIR, `${id}.json`), JSON.stringify(meta, null, 2));
-
     return meta;
   } catch (err: any) {
-    console.error("❌ handleUpload error:", err);
-    throw new Error(`Не вдалося обробити файл ${name}: ${err.message}`);
+    console.error("❌ normalizeAndParse error:", err);
+    return {
+      id,
+      name: filename,
+      ext,
+      type: "error",
+      size: buffer.length,
+      uploaded: new Date().toISOString(),
+      text: "",
+    };
   }
-}
-
-/**
- * 🧩 normalizeAndParse — окремий експорт для сумісності з API
- * Використовується у /api/upload/route.ts
- */
-export async function normalizeAndParse(filename: string, data: ArrayBuffer) {
-  const fakeFile = new File([data], filename);
-  return await handleUpload(fakeFile);
 }
