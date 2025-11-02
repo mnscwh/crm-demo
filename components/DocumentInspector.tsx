@@ -1,5 +1,22 @@
+// === FILE: components/DocumentInspector.tsx ===
 "use client";
+
 import { useState } from "react";
+
+function normalizeFilePath(doc: any): string {
+  const raw =
+    doc?.file?.pdfa ||
+    doc?.file?.docx ||
+    doc?.filePath ||
+    doc?.pdfa ||
+    doc?.docx ||
+    "";
+
+  return String(raw)
+    .replace(/^https?:\/\/[^/]+/i, "")
+    .replace(/^\/?public\//i, "")
+    .replace(/^\/+/, "");
+}
 
 export function DocumentInspector({ doc }: { doc: any }) {
   const [aiSummary, setAiSummary] = useState<string>("");
@@ -12,16 +29,19 @@ export function DocumentInspector({ doc }: { doc: any }) {
     setLawRefs([]);
 
     try {
-      const q = "Проаналізуй документ: виявити ризики, строки, невідповідності.";
+      const filename = normalizeFilePath(doc);
+      const q =
+        "Проаналізуй документ: виявити ризики, строки, невідповідності. Дай стислий висновок.";
       const res = await fetch("/api/ai-on-docs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: q, filename: doc.file.pdfa }),
+        body: JSON.stringify({ question: q, filename }),
       });
+
       const data = await res.json();
 
-      if (!data.ok && data.error) {
-        setError(data.error);
+      if (!res.ok || data.ok === false) {
+        setError(data.error || `HTTP ${res.status}`);
         setAiSummary("⚠️ Помилка аналізу.");
         return;
       }
@@ -29,7 +49,7 @@ export function DocumentInspector({ doc }: { doc: any }) {
       setAiSummary(data.answer || "Недостатньо даних у документах.");
       setLawRefs(data.laws || []);
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Unknown error");
       setAiSummary("⚠️ Сталася помилка.");
     }
   }
@@ -39,8 +59,12 @@ export function DocumentInspector({ doc }: { doc: any }) {
       <h2 className="text-xl font-semibold text-indigo-700">{doc.title}</h2>
 
       <div className="text-sm text-gray-600">
-        <p><strong>Тип:</strong> {doc.type}</p>
-        <p><strong>Статус:</strong> {doc.status}</p>
+        <p>
+          <strong>Тип:</strong> {doc.type}
+        </p>
+        <p>
+          <strong>Статус:</strong> {doc.status}
+        </p>
         <p>
           <strong>SHA256:</strong>{" "}
           {doc.versions?.[0]?.sha256?.slice(0, 16) || "—"}...
@@ -80,11 +104,6 @@ export function DocumentInspector({ doc }: { doc: any }) {
           </ul>
         </div>
       )}
-      {aiSummary && (
-  <div className="p-3 rounded-lg bg-indigo-50 border text-sm whitespace-pre-wrap">
-    {aiSummary || "Документ не містить достатньо даних для аналізу."}
-  </div>
-)}
     </div>
   );
 }
