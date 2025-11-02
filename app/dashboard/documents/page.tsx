@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { UploadZone } from "@/components/UploadZone";
+import { UploadPanel } from "@/components/UploadPanel";
 import { DocumentList } from "@/components/DocumentList";
 import { DocumentInspector } from "@/components/DocumentInspector";
 
@@ -15,7 +15,7 @@ export default function DocumentsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-4">
-          <UploadZone onUploaded={() => setRefresh((n) => n + 1)} />
+          <UploadPanel onUploaded={() => setRefresh((n) => n + 1)} />
           <DocumentList onSelect={setSelected} refreshSignal={refresh} />
         </div>
 
