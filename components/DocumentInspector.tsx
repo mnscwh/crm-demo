@@ -80,6 +80,11 @@ export function DocumentInspector({ doc }: { doc: any }) {
           </ul>
         </div>
       )}
+      {aiSummary && (
+  <div className="p-3 rounded-lg bg-indigo-50 border text-sm whitespace-pre-wrap">
+    {aiSummary || "Документ не містить достатньо даних для аналізу."}
+  </div>
+)}
     </div>
   );
 }

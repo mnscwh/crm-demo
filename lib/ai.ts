@@ -44,6 +44,7 @@ function getCRMContext() {
 
 /** 📄 2️⃣ AI-аналіз документів */
 export async function legalChatOnDocs(question: string, docsText: string) {
+  console.log("🧠 legalChatOnDocs: текст документу =", docsText?.slice(0, 300));
   const systemPrompt = `
   Ви — юридичний аналітик CRM.
   1. Відповідайте лише на основі тексту документів.

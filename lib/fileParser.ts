@@ -1,37 +1,36 @@
-import fs from "fs";
-import path from "path";
 import pdf from "pdf-parse";
 import mammoth from "mammoth";
 
-/** 
+/**
  * Безпечний універсальний парсер DOCX/PDF
- * Повертає текст документа або fallback 
+ * Працює як із FilePath (локально), так і з ArrayBuffer (через fetch)
  */
-export async function parseFile(filePath: string): Promise<string> {
-  if (!fs.existsSync(filePath)) throw new Error(`Файл не знайдено: ${filePath}`);
-
-  const ext = path.extname(filePath).toLowerCase();
+export async function parseFile(
+  input: ArrayBuffer | string,
+  filename?: string
+): Promise<string> {
   try {
-    if (ext === ".pdf") {
-      const dataBuffer = fs.readFileSync(filePath);
-      try {
-        const data = await pdf(dataBuffer);
-        return data.text || "(Порожній PDF)";
-      } catch (err: any) {
-        console.warn(`⚠️ PDF parse error for ${filePath}: ${err.message}`);
-        return `(Не вдалося прочитати PDF: ${err.message})`;
-      }
+    const ext = (filename || "").toLowerCase();
+
+    // 🧾 PDF (ArrayBuffer)
+    if (ext.endsWith(".pdf")) {
+      const dataBuffer =
+        typeof input === "string" ? Buffer.from(input) : Buffer.from(input);
+      const data = await pdf(dataBuffer);
+      return data.text?.trim() || "";
     }
 
-    if (ext === ".docx") {
-      const buffer = fs.readFileSync(filePath);
+    // 📄 DOCX (ArrayBuffer)
+    if (ext.endsWith(".docx")) {
+      const buffer =
+        typeof input === "string" ? Buffer.from(input) : Buffer.from(input);
       const result = await mammoth.extractRawText({ buffer });
-      return result.value || "(Порожній DOCX)";
+      return result.value?.trim() || "";
     }
 
-    return "(Непідтримуваний формат)";
+    return "(Непідтримуваний формат файлу)";
   } catch (err: any) {
-    console.error(`❌ parseFile error for ${filePath}:`, err);
-    return `(Помилка читання: ${err.message})`;
+    console.error(`❌ parseFile error: ${err.message}`);
+    return "";
   }
 }
