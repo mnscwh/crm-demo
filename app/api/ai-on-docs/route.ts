@@ -1,25 +1,43 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { parseFile } from "@/lib/fileParser";
 import { legalChatOnDocs } from "@/lib/ai";
 import { findRelevantLaw } from "@/lib/lawdb";
 
-/** 🧠 Обов’язково для Node.js середовища на Vercel */
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/** Нормалізація шляху до файлу */
+/**
+ * Нормалізація шляху до PDF/DOCX файлу (прибирає public/ або домен)
+ */
 function normalizePublicPath(input: string): string {
   if (!input) return "";
-  let p = input.replace(/^https?:\/\/[^/]+/i, ""); // прибрати домен
-  p = p.replace(/^\/?public\//i, ""); // прибрати /public/
-  p = p.replace(/^\/+/, ""); // прибрати початкові слеші
+  let p = input.replace(/^https?:\/\/[^/]+/i, "");
+  p = p.replace(/^\/?public\//i, "");
+  p = p.replace(/^\/+/, "");
   return p;
 }
 
-/** Основний обробник POST */
+/**
+ * Завантажує файл з public/ як ArrayBuffer (сумісно з Vercel)
+ */
+async function loadFileAsBuffer(relPath: string): Promise<ArrayBuffer> {
+  const url = `${process.env.VERCEL_URL ? "https://" + process.env.VERCEL_URL : ""}/` + relPath;
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.arrayBuffer();
+  } catch (err: any) {
+    console.error("❌ loadFileAsBuffer error:", err.message);
+    throw new Error(`Не вдалося завантажити файл: ${relPath}`);
+  }
+}
+
+/**
+ * Основний POST-ендпоінт AI-аналізу документа
+ */
 export async function POST(req: Request) {
+  console.log("📥 [ai-on-docs] API викликано");
+
   try {
     const { question, filename } = await req.json();
 
@@ -27,18 +45,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, error: "No filename provided." }, { status: 400 });
     }
 
+    // нормалізуємо шлях
     const relPath = normalizePublicPath(filename);
-    const filePath = path.join(process.cwd(), "public", relPath);
+    console.log("📄 Аналіз файлу:", relPath);
 
-    if (!fs.existsSync(filePath)) {
-      console.error("❌ File not found:", filePath);
-      return NextResponse.json({ ok: false, error: `File not found: ${relPath}` }, { status: 404 });
-    }
+    // зчитуємо файл як ArrayBuffer (через fetch)
+    const buffer = await loadFileAsBuffer(relPath);
 
-    // 🧾 Зчитуємо PDF або DOCX
-    const text = await parseFile(filePath);
-    if (!text || text.trim().length < 20) {
-      console.warn("⚠️ Empty or unreadable text for:", relPath);
+    // парсимо текст (PDF або DOCX)
+    const text = await parseFile(buffer, relPath);
+    console.log("🧾 Довжина тексту:", text?.length || 0);
+
+    if (!text || text.trim().length < 50) {
+      console.warn("⚠️ Порожній або нечитабельний документ:", relPath);
       return NextResponse.json({
         ok: true,
         answer: "Недостатньо даних у документах (порожній текст або скан).",
@@ -46,18 +65,22 @@ export async function POST(req: Request) {
       });
     }
 
-    // 🧠 AI-аналіз документу
+    // 🧠 AI-аналіз документа
     const aiAnswer = await legalChatOnDocs(
       question || "Проаналізуй документ: виявити ризики, строки, невідповідності.",
       text
     );
 
-    // ⚖️ Пошук релевантних норм
-    const laws = findRelevantLaw(text);
+    // ⚖️ релевантні норми законодавства
+    const laws = await findRelevantLaw(text);
 
+    console.log("✅ [ai-on-docs] Аналіз завершено, знайдено статей:", laws?.length || 0);
     return NextResponse.json({ ok: true, answer: aiAnswer, laws });
   } catch (err: any) {
     console.error("❌ /api/ai-on-docs error:", err);
-    return NextResponse.json({ ok: false, error: err.message || "Server error" }, { status: 500 });
+    return NextResponse.json(
+      { ok: false, error: err.message || "Server error" },
+      { status: 500 }
+    );
   }
 }
