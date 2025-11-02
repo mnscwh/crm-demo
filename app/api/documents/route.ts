@@ -1,11 +1,16 @@
-// app/api/documents/route.ts
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
 import { NextResponse } from "next/server";
-import { listDocFiles } from "@/lib/rag";
+import fs from "fs";
+import path from "path";
+
+const DB_PATH = path.join(process.cwd(), "data/documents.json");
 
 export async function GET() {
-  const files = listDocFiles().sort((a, b) => a.localeCompare(b));
-  return NextResponse.json({ files }, { headers: { "Cache-Control": "no-store" } });
+  try {
+    if (!fs.existsSync(DB_PATH)) return NextResponse.json([]);
+    const data = fs.readFileSync(DB_PATH, "utf8");
+    const docs = data ? JSON.parse(data) : [];
+    return NextResponse.json(docs);
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

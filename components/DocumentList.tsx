@@ -1,58 +1,56 @@
-// components/DocumentList.tsx
 "use client";
-import { useEffect, useMemo, useState } from "react";
-
-type FileRow = { name: string; size?: number };
+import { useEffect, useState } from "react";
+import { DocumentInspector } from "./DocumentInspector";
 
 export function DocumentList() {
-  const [files, setFiles] = useState<FileRow[]>([]);
-  const [analysis, setAnalysis] = useState<Record<string, string>>({});
-  const [busy, setBusy] = useState<Record<string, boolean>>({});
+  const [docs, setDocs] = useState<any[]>([]);
+  const [selected, setSelected] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  async function loadDocs() {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/documents");
+      const data = await res.json();
+      setDocs(data || []);
+    } catch (e) {
+      console.error("❌ Cannot load documents:", e);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    fetch("/api/files",{cache:"no-store"}).then(r=>r.json()).then(d=>{
-      const arr=(d.files||[]) as string[]; setFiles(arr.map(n=>({name:n})));
-    });
+    loadDocs();
   }, []);
 
-  const list = useMemo(()=>files,[files]);
-
-  const analyze = async (name: string) => {
-    setBusy(p=>({...p,[name]:true}));
-    try{
-      const res = await fetch("/api/ai-analyze",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({filename:name})});
-      const data = await res.json();
-      if (res.ok) setAnalysis(a=>({...a,[name]: data.result}));
-    } finally {
-      setBusy(p=>({...p,[name]:false}));
-    }
-  };
+  if (loading) return <p className="text-gray-500">⏳ Завантаження документів...</p>;
 
   return (
-    <div className="card p-5">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-2xl font-semibold tracking-tight">Документи</h2>
-        <span className="text-xs px-2 py-1 rounded-full bg-white/60 border border-white"> {list.length} файлів</span>
+    <div className="space-y-4">
+      {docs.length === 0 && <p className="text-gray-500">Документів ще немає.</p>}
+
+      <div className="grid grid-cols-3 gap-4">
+        {docs.map((doc) => (
+          <div
+            key={doc.id}
+            onClick={() => setSelected(doc)}
+            className={`p-3 border rounded-lg cursor-pointer hover:bg-indigo-50 ${
+              selected?.id === doc.id ? "border-indigo-500" : "border-gray-200"
+            }`}
+          >
+            <h3 className="font-medium text-indigo-700">{doc.name}</h3>
+            <p className="text-xs text-gray-500">{doc.type}</p>
+            <p className="text-xs text-gray-400">{new Date(doc.uploaded).toLocaleString("uk-UA")}</p>
+          </div>
+        ))}
       </div>
 
-      <ul className="divide-y divide-slate-200">
-        {list.map((f)=>(
-          <li key={f.name} className="py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-            <div>
-              <p className="font-mono text-sm text-slate-900">{f.name}</p>
-              {analysis[f.name] && <p className="text-sm text-slate-700 mt-1">{analysis[f.name]}</p>}
-            </div>
-            <button
-              onClick={()=>analyze(f.name)}
-              disabled={!!busy[f.name]}
-              className="px-3 py-1.5 rounded-xl bg-[linear-gradient(90deg,#4e8cff,#6f74ff)] text-white text-sm shadow hover:shadow-md disabled:opacity-60"
-            >
-              {busy[f.name] ? "Аналіз…" : "Аналізувати"}
-            </button>
-          </li>
-        ))}
-        {list.length===0 && <li className="py-6 text-sm text-slate-600">Документи відсутні</li>}
-      </ul>
+      {selected && (
+        <div className="mt-4">
+          <DocumentInspector doc={selected} />
+        </div>
+      )}
     </div>
   );
 }
