@@ -1,7 +1,12 @@
 {
   "functions": {
-    "api/**": {
+    "api/**/*": {
       "runtime": "nodejs18.x"
+    }
+  },
+  "build": {
+    "env": {
+      "NEXT_RUNTIME": "nodejs"
     }
   }
 }

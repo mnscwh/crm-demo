@@ -1,11 +1,9 @@
-// === FILE: app/api/upload/route.ts ===
+export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
 import { normalizeAndParse } from "@/lib/smartFileHandler";
-
-export const runtime = "nodejs";
 
 const DB_PATH = path.join(process.cwd(), "data", "documents.json");
 const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
