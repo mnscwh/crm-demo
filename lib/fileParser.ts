@@ -1,52 +1,48 @@
-// === FILE: lib/fileParser.ts ===
 import fs from "fs";
 import path from "path";
 import pdf from "pdf-parse";
 import mammoth from "mammoth";
+import Tesseract from "tesseract.js";
 
 /**
- * Универсальный парсер для PDF/DOCX:
- * - Если передали абсолютный путь — читает с диска
- * - Если передали буфер — парсит из буфера
+ * Парсер PDF/DOCX з підтримкою OCR (для сканів)
  */
-export async function parseFile(
-  input: string | Buffer,
-  filenameHint?: string
-): Promise<string> {
+export async function parseFile(input: Buffer | string, filename?: string): Promise<string> {
   try {
-    const isPath = typeof input === "string";
-    const buf: Buffer = isPath ? fs.readFileSync(input) : (input as Buffer);
-    const ext = (
-      (isPath ? path.extname(input as string) : path.extname(filenameHint || "")) || ""
-    ).toLowerCase();
+    const ext = (filename || "").toLowerCase();
+    let buffer: Buffer;
 
-    if (ext === ".pdf") {
-      try {
-        const data = await pdf(buf);
-        return (data.text || "").trim();
-      } catch (e: any) {
-        return `(Не вдалося прочитати PDF: ${e?.message || "unknown"})`;
-      }
+    if (typeof input === "string") {
+      const abs = path.isAbsolute(input) ? input : path.join(process.cwd(), input);
+      if (!fs.existsSync(abs)) throw new Error(`Файл не знайдено: ${abs}`);
+      buffer = fs.readFileSync(abs);
+    } else {
+      buffer = input;
     }
 
-    if (ext === ".docx") {
-      const result = await mammoth.extractRawText({ buffer: buf });
-      return (result.value || "").trim();
+    // === PDF ===
+    if (ext.endsWith(".pdf")) {
+      // 1️⃣ спроба звичайного парсингу
+      const data = await pdf(buffer);
+      if (data.text && data.text.trim().length > 20) return data.text.trim();
+
+      // 2️⃣ якщо тексту нема — OCR
+      console.log("🧠 OCR fallback для сканованого PDF:", filename);
+      const { data: ocr } = await Tesseract.recognize(buffer, "ukr+eng", {
+        logger: (m) => console.log("OCR:", m.status, m.progress),
+      });
+      return ocr.text.trim();
+    }
+
+    // === DOCX ===
+    if (ext.endsWith(".docx")) {
+      const result = await mammoth.extractRawText({ buffer });
+      return result.value?.trim() || "";
     }
 
     return "(Непідтримуваний формат)";
   } catch (err: any) {
-    return `(Помилка читання файлу: ${err?.message || "unknown"})`;
+    console.error("❌ parseFile error:", err);
+    return "";
   }
-}
-
-/** Безопасная нормализация относительного пути для каталога public */
-export function normalizePublicPath(input: string): string {
-  if (!input) return "";
-  let p = input.replace(/^https?:\/\/[^/]+/i, ""); // убрать домен
-  p = p.replace(/^\/?public\//i, "");              // убрать /public
-  p = p.replace(/^\/+/, "");                       // убрать начальные /
-  // запрет на выход выше public
-  if (p.includes("..")) throw new Error("Invalid path.");
-  return p;
 }
