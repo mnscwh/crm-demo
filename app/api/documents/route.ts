@@ -1,8 +1,9 @@
+// === FILE: app/api/documents/route.ts ===
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-const DB_PATH = path.join(process.cwd(), "data/documents.json");
+const DB_PATH = path.join(process.cwd(), "data", "documents.json");
 
 export async function GET() {
   try {

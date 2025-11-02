@@ -1,56 +1,58 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { DocumentInspector } from "./DocumentInspector";
 
-export function DocumentList() {
+export function DocumentList({
+  onSelect,
+  refreshSignal,
+}: {
+  onSelect: (doc: any) => void;
+  refreshSignal: number; // просто число, увеличиваем после upload
+}) {
   const [docs, setDocs] = useState<any[]>([]);
-  const [selected, setSelected] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  async function loadDocs() {
+  async function load() {
     setLoading(true);
     try {
-      const res = await fetch("/api/documents");
-      const data = await res.json();
-      setDocs(data || []);
-    } catch (e) {
-      console.error("❌ Cannot load documents:", e);
+      const r = await fetch("/api/documents", { cache: "no-store" });
+      const d = await r.json();
+      setDocs(Array.isArray(d) ? d : []);
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
-    loadDocs();
-  }, []);
-
-  if (loading) return <p className="text-gray-500">⏳ Завантаження документів...</p>;
+    load();
+  }, [refreshSignal]);
 
   return (
-    <div className="space-y-4">
-      {docs.length === 0 && <p className="text-gray-500">Документів ще немає.</p>}
-
-      <div className="grid grid-cols-3 gap-4">
-        {docs.map((doc) => (
-          <div
-            key={doc.id}
-            onClick={() => setSelected(doc)}
-            className={`p-3 border rounded-lg cursor-pointer hover:bg-indigo-50 ${
-              selected?.id === doc.id ? "border-indigo-500" : "border-gray-200"
-            }`}
-          >
-            <h3 className="font-medium text-indigo-700">{doc.name}</h3>
-            <p className="text-xs text-gray-500">{doc.type}</p>
-            <p className="text-xs text-gray-400">{new Date(doc.uploaded).toLocaleString("uk-UA")}</p>
-          </div>
-        ))}
+    <div className="bg-white rounded-xl border shadow-sm p-4">
+      <div className="flex items-center justify-between mb-2">
+        <h2 className="font-medium text-gray-900">Список документів</h2>
+        <button
+          onClick={load}
+          className="text-xs text-indigo-600 hover:text-indigo-800"
+        >
+          Оновити
+        </button>
       </div>
-
-      {selected && (
-        <div className="mt-4">
-          <DocumentInspector doc={selected} />
-        </div>
-      )}
+      {loading && <div className="text-sm text-gray-500">Завантаження…</div>}
+      <ul className="divide-y text-sm">
+        {docs.map((d) => (
+          <li
+            key={d.id}
+            onClick={() => onSelect(d)}
+            className="py-2 cursor-pointer hover:bg-indigo-50 px-2 rounded-md"
+          >
+            {d.title}
+          </li>
+        ))}
+        {!loading && docs.length === 0 && (
+          <li className="py-2 text-gray-500">Немає документів</li>
+        )}
+      </ul>
     </div>
   );
 }

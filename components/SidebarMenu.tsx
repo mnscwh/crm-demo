@@ -47,8 +47,9 @@ export function SidebarMenu() {
       {/* Навигация */}
       <nav className="flex-1 flex flex-col gap-1 px-2">
         {links.map(({ name, path, icon: Icon }) => {
-          const active =
-            pathname === path || pathname.startsWith(`${path}/`);
+          const isExact = pathname === path;
+          const isChild = path !== "/dashboard" && pathname.startsWith(`${path}/`);
+          const active = isExact || isChild;
           return (
             <Link
               key={path}
