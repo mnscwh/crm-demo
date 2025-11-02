@@ -1,36 +1,52 @@
+// === FILE: lib/fileParser.ts ===
+import fs from "fs";
+import path from "path";
 import pdf from "pdf-parse";
 import mammoth from "mammoth";
 
 /**
- * Безпечний універсальний парсер DOCX/PDF
- * Працює як із FilePath (локально), так і з ArrayBuffer (через fetch)
+ * Универсальный парсер для PDF/DOCX:
+ * - Если передали абсолютный путь — читает с диска
+ * - Если передали буфер — парсит из буфера
  */
 export async function parseFile(
-  input: ArrayBuffer | string,
-  filename?: string
+  input: string | Buffer,
+  filenameHint?: string
 ): Promise<string> {
   try {
-    const ext = (filename || "").toLowerCase();
+    const isPath = typeof input === "string";
+    const buf: Buffer = isPath ? fs.readFileSync(input) : (input as Buffer);
+    const ext = (
+      (isPath ? path.extname(input as string) : path.extname(filenameHint || "")) || ""
+    ).toLowerCase();
 
-    // 🧾 PDF (ArrayBuffer)
-    if (ext.endsWith(".pdf")) {
-      const dataBuffer =
-        typeof input === "string" ? Buffer.from(input) : Buffer.from(input);
-      const data = await pdf(dataBuffer);
-      return data.text?.trim() || "";
+    if (ext === ".pdf") {
+      try {
+        const data = await pdf(buf);
+        return (data.text || "").trim();
+      } catch (e: any) {
+        return `(Не вдалося прочитати PDF: ${e?.message || "unknown"})`;
+      }
     }
 
-    // 📄 DOCX (ArrayBuffer)
-    if (ext.endsWith(".docx")) {
-      const buffer =
-        typeof input === "string" ? Buffer.from(input) : Buffer.from(input);
-      const result = await mammoth.extractRawText({ buffer });
-      return result.value?.trim() || "";
+    if (ext === ".docx") {
+      const result = await mammoth.extractRawText({ buffer: buf });
+      return (result.value || "").trim();
     }
 
-    return "(Непідтримуваний формат файлу)";
+    return "(Непідтримуваний формат)";
   } catch (err: any) {
-    console.error(`❌ parseFile error: ${err.message}`);
-    return "";
+    return `(Помилка читання файлу: ${err?.message || "unknown"})`;
   }
+}
+
+/** Безопасная нормализация относительного пути для каталога public */
+export function normalizePublicPath(input: string): string {
+  if (!input) return "";
+  let p = input.replace(/^https?:\/\/[^/]+/i, ""); // убрать домен
+  p = p.replace(/^\/?public\//i, "");              // убрать /public
+  p = p.replace(/^\/+/, "");                       // убрать начальные /
+  // запрет на выход выше public
+  if (p.includes("..")) throw new Error("Invalid path.");
+  return p;
 }

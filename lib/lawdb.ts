@@ -1,21 +1,16 @@
+// === FILE: lib/lawdb.ts ===
 import { readJson } from "@/lib/server-utils";
 
-/** Знаходить релевантні норми закону в тексті документа */
-export async function findRelevantLaw(text: string) {
+export function findRelevantLaw(text: string) {
   try {
     const db = readJson<any[]>("data/lawdb.json");
-    const query = text.toLowerCase();
-
-    const results = db.filter((law) =>
-      query.includes(
-        law.article?.toLowerCase()?.replace("ст.", "").trim() || ""
-      ) ||
-      query.includes(law.type?.toLowerCase() || "")
-    );
-
-    return results.slice(0, 5);
-  } catch (err) {
-    console.error("⚠️ [findRelevantLaw] failed:", err);
+    const q = text.toLowerCase();
+    const res = db.filter((law) => {
+      const art = (law.article || "").toLowerCase().replace("ст.", "").trim();
+      return (art && q.includes(art)) || q.includes((law.type || "").toLowerCase());
+    });
+    return res.slice(0, 5);
+  } catch {
     return [];
   }
 }
