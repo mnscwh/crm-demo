@@ -30,39 +30,46 @@ function writeDb(rows: any[]) {
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
-    const file = formData.get("file") as File | null;
-    if (!file)
+    const blob = formData.get("file") as Blob | null;
+
+    if (!blob)
       return NextResponse.json({ ok: false, error: "Файл не надіслано." }, { status: 400 });
 
-    const arrayBuffer = await file.arrayBuffer();
+    // читаем имя и расширение
+    const filename =
+      (blob as any).name || "uploaded_" + Date.now().toString();
+    const ext = filename.split(".").pop()?.toLowerCase() || "bin";
+
+    // читаем содержимое
+    const arrayBuffer = await blob.arrayBuffer();
     const buf = Buffer.from(arrayBuffer);
     const sha256 = crypto.createHash("sha256").update(buf).digest("hex");
-    const ext = (file.name.split(".").pop() || "").toLowerCase();
     const baseName = `${sha256}.${ext}`;
 
     ensureDir(UPLOAD_DIR);
     const savePath = path.join(UPLOAD_DIR, baseName);
     fs.writeFileSync(savePath, buf);
 
-    const parsed = await normalizeAndParse(file.name, arrayBuffer);
+    // парсим контент
+    const parsed = await normalizeAndParse(filename, arrayBuffer);
 
+    // обновляем базу
     const rows = readDb();
     const id = `doc_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
     const record = {
       id,
-      title: file.name,
+      title: filename,
       type: parsed.type,
       status: "Підписано",
       file: {
-        original: file.name,
+        original: filename,
         stored: `uploads/${baseName}`,
         ext,
       },
       meta: {
-        name: parsed.name,
+        size: buf.length,
+        uploaded: new Date().toISOString(),
         type: parsed.type,
-        size: parsed.size,
-        uploaded: parsed.uploaded,
       },
       extractedText: parsed.text || "",
       versions: [{ sha256, at: new Date().toISOString() }],
